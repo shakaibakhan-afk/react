@@ -15,13 +15,12 @@ function App() {
     setLoading(true)
 
     try {
-      // Simulate API call - replace with your actual login logic
       await new Promise(resolve => setTimeout(resolve, 1000))
       
-      // Example validation
+      
       if (username && password) {
         console.log('Login successful:', { username, password })
-        // Set user and login state
+        
         setUser({ username })
         setIsLoggedIn(true)
       } else {
@@ -42,7 +41,7 @@ function App() {
     setPassword('')
   }
 
-  // Show Dashboard if logged in
+  
   if (isLoggedIn) {
     return <Dashboard user={user} onLogout={handleLogout} />
   }
