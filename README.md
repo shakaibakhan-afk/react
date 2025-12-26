@@ -1,18 +1,62 @@
-# React + Vite
+# limitless-horizon
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Login page built with React + Vite + Tailwind CSS
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Instagram-style login page
+- Dashboard after login
+- Tailwind CSS styling
+- Responsive design
+- GitHub Pages deployment ready
 
-## React Compiler
+## 📦 Installation
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+```bash
+npm install
+```
 
-Note: This will impact Vite dev & build performances.
+## 🛠️ Development
 
-## Expanding the ESLint configuration
+```bash
+npm run dev
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🏗️ Build
+
+```bash
+npm run build
+```
+
+## 📤 Deploy to GitHub Pages
+
+### Automatic Deployment (Recommended)
+
+1. **Enable GitHub Pages:**
+   - Go to your repository → Settings → Pages
+   - Source: Select **"GitHub Actions"**
+   - Save
+
+2. **Push your code:**
+   ```bash
+   git add .
+   git commit -m "Deploy to GitHub Pages"
+   git push origin main
+   ```
+
+3. **Check deployment:**
+   - Go to Actions tab in GitHub
+   - Wait for the workflow to complete
+   - Your site will be available at: `https://shakaibakhan-afk.github.io/react/`
+
+### Important Notes
+
+- The `base` path in `vite.config.js` is set to `/react/` to match the repository name
+- If your repository name is different, update the `base` path accordingly
+- The deployment happens automatically via GitHub Actions workflow
+
+## 🔧 Configuration
+
+- **Vite Config:** `vite.config.js` - Contains base path for GitHub Pages
+- **Tailwind Config:** `tailwind.config.js` - Tailwind CSS configuration
+- **Deployment:** `.github/workflows/deploy.yml` - GitHub Actions workflow
