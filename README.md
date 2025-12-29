@@ -60,3 +60,74 @@ npm run build
 - **Vite Config:** `vite.config.js` - Contains base path for GitHub Pages
 - **Tailwind Config:** `tailwind.config.js` - Tailwind CSS configuration
 - **Deployment:** `.github/workflows/deploy.yml` - GitHub Actions workflow
+
+## 🎨 Custom Variables in Tailwind CSS
+
+This project uses Tailwind CSS v4, which supports custom variables in multiple ways:
+
+### Method 1: CSS Custom Properties (Recommended)
+
+Define variables in `src/index.css` using CSS custom properties:
+
+```css
+:root {
+  --color-primary: #646cff;
+  --spacing-md: 1rem;
+}
+```
+
+Use them directly in your components:
+```jsx
+<div style={{ backgroundColor: 'var(--color-primary)' }}>
+  Content
+</div>
+```
+
+### Method 2: @theme Directive (Tailwind v4)
+
+Define theme values using the `@theme` directive in `src/index.css`:
+
+```css
+@theme {
+  --color-brand-primary: #646cff;
+  --spacing-custom-md: 1rem;
+}
+```
+
+Use them as Tailwind utilities:
+```jsx
+<div className="bg-brand-primary p-custom-md">
+  Content
+</div>
+```
+
+### Method 3: Extend Theme in Config
+
+Define custom values in `tailwind.config.js`:
+
+```js
+theme: {
+  extend: {
+    colors: {
+      'custom-primary': '#646cff',
+    },
+    spacing: {
+      'custom-md': '1rem',
+    },
+  },
+}
+```
+
+Use them as Tailwind utilities:
+```jsx
+<div className="bg-custom-primary p-custom-md">
+  Content
+</div>
+```
+
+### Usage Examples
+
+- **Colors:** `bg-custom-primary`, `text-brand-primary`, `border-custom-accent`
+- **Spacing:** `p-custom-md`, `m-custom-lg`, `gap-custom-sm`
+- **Font Sizes:** `text-custom-lg`, `text-custom-xl`
+- **Border Radius:** `rounded-custom-lg`, `rounded-custom-xl`

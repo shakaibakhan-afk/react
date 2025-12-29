@@ -1,14 +1,41 @@
 @import "tailwindcss";
 
-
+/* CSS Custom Properties for black/mahogany theme */
 :root {
+  /* Black & Mahogany color variables */
+  --color-primary: #CD5C5C;
+  --color-primary-hover: #B22222;
+  --color-secondary: #E9967A;
+  --color-accent: #DC143C;
+  
+  /* Custom spacing variables */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  
+  /* Custom font size variables */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  
+  /* Custom border radius variables */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  
+  /* Default styles */
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
+  color-scheme: dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #000000;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -18,11 +45,11 @@
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: var(--color-primary);
   text-decoration: inherit;
 }
 a:hover {
-  color: #535bf2;
+  color: var(--color-primary-hover);
 }
 
 body {
@@ -44,27 +71,32 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--color-primary);
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: background-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  background-color: var(--color-primary-hover);
 }
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  outline: 4px auto var(--color-primary);
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+/* Glowing dark mahogany text effect */
+.text-glow-mahogany {
+  color: #8B0000;
+  text-shadow: 
+    0 0 10px rgba(139, 0, 0, 0.8),
+    0 0 20px rgba(139, 0, 0, 0.6),
+    0 0 30px rgba(139, 0, 0, 0.4),
+    0 0 40px rgba(139, 0, 0, 0.2);
+}
+
+.text-glow-mahogany-light {
+  color: #B22222;
+  text-shadow: 
+    0 0 10px rgba(178, 34, 34, 0.8),
+    0 0 20px rgba(178, 34, 34, 0.6),
+    0 0 30px rgba(178, 34, 34, 0.4);
 }
