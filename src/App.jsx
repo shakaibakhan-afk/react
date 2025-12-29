@@ -90,7 +90,7 @@ function App() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="w-full px-5 py-4 text-base sm:text-lg bg-white border border-white/40 rounded-xl shadow-md focus:outline-none focus:ring-3 focus:ring-white/60 focus:border-white focus:shadow-lg transition-all duration-200 placeholder-gray-400 text-gray-900 hover:border-white/60"
+                  className="w-full px-5 py-4 text-base sm:text-lg bg-white border-2 border-gray-200 rounded-xl shadow-md focus:outline-none focus:ring-3 focus:ring-cyan-300 focus:border-cyan-400 focus:shadow-lg transition-all duration-200 placeholder-gray-400 text-gray-900 hover:border-gray-300"
                 />
               </div>
               
@@ -103,10 +103,10 @@ function App() {
               <button 
                 type="submit" 
                 disabled={loading}
-                className={`w-full py-4 px-6 rounded-xl text-lg sm:text-xl font-bold text-teal-900 transition-all duration-300 ${
+                className={`w-full py-4 px-6 rounded-xl text-lg sm:text-xl font-bold text-white transition-all duration-300 ${
                   loading 
-                    ? 'bg-white/70 cursor-not-allowed opacity-70 shadow-md' 
-                    : 'bg-white hover:bg-white/95 active:bg-white/85 shadow-lg hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98]'
+                    ? 'bg-teal-400 cursor-not-allowed opacity-70 shadow-md' 
+                    : 'bg-gradient-to-r from-cyan-400 to-teal-500 hover:from-cyan-500 hover:to-teal-600 active:from-cyan-600 active:to-teal-700 shadow-lg hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98]'
                 }`}
               >
                 {loading ? 'Logging in...' : 'Log In'}
