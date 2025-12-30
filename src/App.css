@@ -41,3 +41,55 @@ body {
 .read-the-docs {
   color: #888;
 }
+
+.btn-primary {
+  background-color: #FFD350;
+  color: #0F5E7B;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #0F5E7B;
+  color: #FFFFFF;
+}
+
+.btn-primary:disabled {
+  opacity: 0.7;
+}
+
+/* Link hover styles */
+.link-secondary {
+  color: #576472;
+  transition: color 0.2s ease;
+}
+
+.link-secondary:hover {
+  color: #0F5E7B;
+}
+
+/* Prevent text wrapping in form elements */
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+label {
+  white-space: nowrap;
+}
+
+/* Prevent welcome back text from wrapping */
+.bg-white h1,
+.bg-white h1.whitespace-nowrap {
+  white-space: nowrap !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Ensure logo scales proportionally */
+img[alt="Limitless Horizons Logo"] {
+  object-fit: contain;
+  height: auto;
+}

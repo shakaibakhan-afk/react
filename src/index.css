@@ -1,8 +1,18 @@
 @import "tailwindcss";
 
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px; /* Base font size 1rem = 16px */
+  width: 100%;
+  overflow-x: hidden;
+}
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-size: 16px; /* Base font size 1rem = 16px */
   line-height: 1.5;
   font-weight: 400;
 
@@ -27,10 +37,14 @@ a:hover {
 
 body {
   margin: 0;
+  padding: 0;
   min-width: 320px;
   min-height: 100vh;
+  width: 100%;
   display: block;
   background-color: #ffffff;
+  font-size: 1rem; /* 16px */
+  overflow-x: hidden;
 }
 
 h1 {
@@ -46,7 +60,6 @@ button {
   font-weight: 500;
   font-family: inherit;
   background-color: #1a1a1a;
-  cursor: pointer;
   transition: border-color 0.25s;
 }
 button:hover {

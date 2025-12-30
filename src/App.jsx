@@ -45,27 +45,30 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-r from-cyan-200 via-teal-200 to-yellow-200">
+    <div className="min-h-screen w-full flex items-center justify-center" style={{ background: 'linear-gradient(180deg ,#61C8D0,#FFE596)' }}>
       {/* Hero Section with Gradient Background */}
-      <div className="flex-1 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-md w-full space-y-8">
+      <div className="w-full flex items-center justify-center py-8 px-4">
+        <div className="w-full max-w-[400px] mx-auto space-y-6">
           {/* Logo Section */}
-          <div className="text-center mb-8">
+          <div className="text-center mb-6">
             <img 
               src={logo} 
               alt="Limitless Horizons Logo" 
-              className="h-20 mx-auto mb-4"
+              className="h-20 mx-auto mb-3 w-auto max-w-[220px]"
             />
           </div>
 
           {/* Login Card with White Background */}
-          <div className="bg-white rounded-xl shadow-2xl p-8 sm:p-10 md:p-12">
-            
+          <div className="bg-white rounded-xl shadow-2xl p-10 w-full">
+            {/* Welcome Back Text */}
+            <h1 className="text-2xl font-bold mb-4 whitespace-nowrap text-center" style={{ color: '#0F5E7B', fontSize: '1.5rem' }}>
+              Welcome back
+            </h1>
             
             {/* Login Form */}
-            <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-7">
+            <form onSubmit={handleSubmit} className="space-y-5 mt-6">
               <div>
-                <label htmlFor="email" className="block text-base sm:text-lg font-semibold text-teal-900 mb-3 tracking-tight">
+                <label htmlFor="email" className="block text-base font-semibold mb-3 tracking-tight whitespace-nowrap" style={{ color: '#0F5E7B', fontSize: '1rem' }}>
                   Email Address
                 </label>
                 <input
@@ -75,12 +78,13 @@ function App() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="w-full px-5 py-4 text-base sm:text-lg bg-white border-2 border-gray-200 rounded-xl shadow-md focus:outline-none focus:ring-3 focus:ring-cyan-300 focus:border-cyan-400 focus:shadow-lg transition-all duration-200 placeholder-gray-400 text-gray-900 hover:border-gray-300"
+                  className="w-full px-4 py-3.5 text-base bg-white border-2 border-gray-200 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#FFD350] focus:border-[#0F5E7B] transition-all duration-200 placeholder-gray-400 hover:border-gray-300"
+                  style={{ color: '#0F5E7B', fontSize: '1rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}
                 />
               </div>
               
               <div>
-                <label htmlFor="password" className="block text-base sm:text-lg font-semibold text-teal-900 mb-3 tracking-tight">
+                <label htmlFor="password" className="block text-base font-semibold mb-3 tracking-tight whitespace-nowrap" style={{ color: '#0F5E7B', fontSize: '1rem' }}>
                   Password
                 </label>
                 <input
@@ -90,12 +94,13 @@ function App() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="w-full px-5 py-4 text-base sm:text-lg bg-white border-2 border-gray-200 rounded-xl shadow-md focus:outline-none focus:ring-3 focus:ring-cyan-300 focus:border-cyan-400 focus:shadow-lg transition-all duration-200 placeholder-gray-400 text-gray-900 hover:border-gray-300"
+                  className="w-full px-4 py-3.5 text-base bg-white border-2 border-gray-200 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#FFD350] focus:border-[#0F5E7B] transition-all duration-200 placeholder-gray-400 hover:border-gray-300"
+                  style={{ color: '#0F5E7B', fontSize: '1rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}
                 />
               </div>
               
               {error && (
-                <div className="bg-red-100 border-2 border-red-300 text-red-800 text-base text-center py-4 px-5 rounded-xl shadow-md">
+                <div className="bg-red-100 border-2 border-red-300 text-red-800 text-sm text-center py-3 px-4 rounded-lg shadow-sm">
                   {error}
                 </div>
               )}
@@ -103,41 +108,26 @@ function App() {
               <button 
                 type="submit" 
                 disabled={loading}
-                className={`w-full py-4 px-6 rounded-xl text-lg sm:text-xl font-bold text-white transition-all duration-300 ${
+                className={`btn-primary w-full py-3.5 px-6 rounded-lg text-base font-bold shadow-md hover:shadow-lg ${
                   loading 
-                    ? 'bg-teal-400 cursor-not-allowed opacity-70 shadow-md' 
-                    : 'bg-gradient-to-r from-cyan-400 to-teal-500 hover:from-cyan-500 hover:to-teal-600 active:from-cyan-600 active:to-teal-700 shadow-lg hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98]'
+                    ? '' 
+                    : 'hover:scale-[1.02] active:scale-[0.98]'
                 }`}
+                style={{ fontSize: '1rem' }}
               >
                 {loading ? 'Logging in...' : 'Log In'}
               </button>
             </form>
             
             {/* Forgot Password Link */}
-            <div className="mt-7 sm:mt-8 text-center">
+            <div className="mt-7 text-center">
               <a 
                 href="#" 
-                className="text-base sm:text-lg text-teal-900 hover:text-teal-950 font-semibold transition-colors duration-200 hover:underline"
+                className="link-secondary text-sm font-semibold hover:underline"
+                style={{ fontSize: '0.875rem' }}
               >
                 Forgot your password?
               </a>
-            </div>
-            
-            {/* Divider */}
-            <div className="flex items-center my-7 sm:my-8">
-              <div className="flex-1 border-t-2 border-teal-900/30"></div>
-              <div className="px-4 text-sm font-bold text-teal-900 uppercase tracking-wider">OR</div>
-              <div className="flex-1 border-t-2 border-teal-900/30"></div>
-            </div>
-            
-            {/* Sign Up Link */}
-            <div className="text-center">
-              <p className="text-base sm:text-lg text-teal-900">
-                Don't have an account?{' '}
-                <a href="#" className="text-teal-950 hover:text-teal-900 font-bold transition-colors duration-200 underline hover:no-underline">
-                  Sign up
-                </a>
-              </p>
             </div>
           </div>
         </div>
@@ -160,15 +150,15 @@ function Dashboard({ user, onLogout }) {
                 alt="Limitless Horizons Logo" 
                 className="h-10"
               />
-              <h1 className="text-xl font-bold text-teal-900">
+              <h1 className="text-xl font-bold" style={{ color: '#0F5E7B' }}>
                 LIMITLESS HORIZONS
               </h1>
             </div>
             <div className="flex items-center gap-4">
-              <span className="text-teal-900">Welcome, <span className="font-semibold">{user?.email}</span></span>
+              <span style={{ color: '#0F5E7B' }}>Welcome, <span className="font-semibold">{user?.email}</span></span>
               <button
                 onClick={onLogout}
-                className="px-4 py-2 bg-yellow-200 text-teal-900 rounded-lg hover:bg-yellow-300 transition-colors text-sm font-semibold shadow-md"
+                className="btn-primary px-4 py-2 rounded-lg text-sm font-semibold shadow-md"
               >
                 Logout
               </button>
@@ -180,10 +170,10 @@ function Dashboard({ user, onLogout }) {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-teal-900 mb-4">
+          <h2 className="text-4xl font-bold mb-4" style={{ color: '#0F5E7B' }}>
             Welcome to Limitless Horizons
           </h2>
-          <p className="text-xl text-gray-600">
+          <p className="text-xl" style={{ color: '#576472' }}>
             You have successfully logged in.
           </p>
         </div>
@@ -192,39 +182,39 @@ function Dashboard({ user, onLogout }) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <div className="bg-white border-2 border-teal-200 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
             <div className="text-teal-600 text-3xl mb-4">📊</div>
-            <h3 className="text-xl font-semibold text-teal-900 mb-2">Dashboard</h3>
-            <p className="text-gray-600">View your analytics and insights</p>
+            <h3 className="text-xl font-semibold mb-2" style={{ color: '#0F5E7B' }}>Dashboard</h3>
+            <p style={{ color: '#576472' }}>View your analytics and insights</p>
           </div>
 
           <div className="bg-white border-2 border-yellow-200 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
             <div className="text-yellow-600 text-3xl mb-4">⚙️</div>
-            <h3 className="text-xl font-semibold text-teal-900 mb-2">Settings</h3>
-            <p className="text-gray-600">Manage your account settings</p>
+            <h3 className="text-xl font-semibold mb-2" style={{ color: '#0F5E7B' }}>Settings</h3>
+            <p style={{ color: '#576472' }}>Manage your account settings</p>
           </div>
 
           <div className="bg-white border-2 border-cyan-200 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
             <div className="text-cyan-600 text-3xl mb-4">👤</div>
-            <h3 className="text-xl font-semibold text-teal-900 mb-2">Profile</h3>
-            <p className="text-gray-600">Update your profile information</p>
+            <h3 className="text-xl font-semibold mb-2" style={{ color: '#0F5E7B' }}>Profile</h3>
+            <p style={{ color: '#576472' }}>Update your profile information</p>
           </div>
         </div>
 
         {/* Recent Activity */}
         <div className="bg-white border-2 border-gray-200 rounded-lg shadow-md p-6">
-          <h3 className="text-2xl font-bold text-teal-900 mb-4">Recent Activity</h3>
+          <h3 className="text-2xl font-bold mb-4" style={{ color: '#0F5E7B' }}>Recent Activity</h3>
           <div className="space-y-4">
             <div className="flex items-center gap-4 p-4 bg-teal-50 rounded-lg">
               <div className="w-2 h-2 bg-teal-500 rounded-full"></div>
               <div className="flex-1">
-                <p className="text-teal-900 font-medium">Login successful</p>
-                <p className="text-sm text-gray-500">Just now</p>
+                <p className="font-medium" style={{ color: '#0F5E7B' }}>Login successful</p>
+                <p className="text-sm" style={{ color: '#576472' }}>Just now</p>
               </div>
             </div>
             <div className="flex items-center gap-4 p-4 bg-yellow-50 rounded-lg">
               <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
               <div className="flex-1">
-                <p className="text-teal-900 font-medium">Account accessed</p>
-                <p className="text-sm text-gray-500">Today</p>
+                <p className="font-medium" style={{ color: '#0F5E7B' }}>Account accessed</p>
+                <p className="text-sm" style={{ color: '#576472' }}>Today</p>
               </div>
             </div>
           </div>
