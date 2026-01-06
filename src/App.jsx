@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import logo from './assets/68d68d4834b714f5ba55664d_Frame 2121450324.svg'
+import { login, logout, getMe, getCurrentUser, isAuthenticated } from './services/authService'
 
 function App() {
   const [email, setEmail] = useState('')
@@ -9,6 +10,43 @@ function App() {
   const [loading, setLoading] = useState(false)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [user, setUser] = useState(null)
+  const [checkingAuth, setCheckingAuth] = useState(true)
+
+  // Check authentication status on app load
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        // Check if we have a token
+        if (isAuthenticated()) {
+          // Try to get user info from API
+          try {
+            const userData = await getMe()
+            // Update user state with API response
+            const currentUser = getCurrentUser()
+            setUser(currentUser || { email: userData.email || userData.user?.email })
+            setIsLoggedIn(true)
+          } catch (err) {
+            // If getMe fails (e.g., 401), clear auth and show login
+            console.error('Auth check failed:', err)
+            setIsLoggedIn(false)
+            setUser(null)
+          }
+        } else {
+          // No token, ensure we're logged out
+          setIsLoggedIn(false)
+          setUser(null)
+        }
+      } catch (err) {
+        console.error('Error checking authentication:', err)
+        setIsLoggedIn(false)
+        setUser(null)
+      } finally {
+        setCheckingAuth(false)
+      }
+    }
+
+    checkAuth()
+  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -16,28 +54,66 @@ function App() {
     setLoading(true)
 
     try {
-      await new Promise(resolve => setTimeout(resolve, 1000))
+      const response = await login(email, password)
       
-      if (email && password) {
-        console.log('Login successful:', { email, password })
-        setUser({ email })
-        setIsLoggedIn(true)
-      } else {
-        throw new Error('Please fill in all fields')
-      }
+      // Get user data from response or localStorage
+      const currentUser = getCurrentUser()
+      setUser(currentUser || { email: response.email || response.user?.email || email })
+      setIsLoggedIn(true)
+      
+      // Clear form
+      setEmail('')
+      setPassword('')
     } catch (err) {
-      const errorMsg = err.message || 'Failed to login. Please check your credentials.'
+      // Handle different error types
+      let errorMsg = 'Failed to login. Please check your credentials.'
+      
+      if (err.status === 401) {
+        errorMsg = 'Invalid email or password. Please try again.'
+      } else if (err.status === 400) {
+        errorMsg = err.data?.message || err.message || 'Please check your input and try again.'
+      } else if (err.message) {
+        errorMsg = err.message
+      } else if (err.data?.message) {
+        errorMsg = err.data.message
+      } else if (err.data?.error) {
+        errorMsg = err.data.error
+      }
+      
       setError(errorMsg)
+      setIsLoggedIn(false)
+      setUser(null)
     } finally {
       setLoading(false)
     }
   }
 
-  const handleLogout = () => {
-    setIsLoggedIn(false)
-    setUser(null)
-    setEmail('')
-    setPassword('')
+  const handleLogout = async () => {
+    setLoading(true)
+    try {
+      await logout()
+    } catch (err) {
+      console.error('Logout error:', err)
+      // Even if API call fails, clear local state
+    } finally {
+      setIsLoggedIn(false)
+      setUser(null)
+      setEmail('')
+      setPassword('')
+      setError('')
+      setLoading(false)
+    }
+  }
+
+  // Show loading state while checking authentication
+  if (checkingAuth) {
+    return (
+      <div className="min-h-screen w-full flex items-center justify-center" style={{ background: 'linear-gradient(180deg ,#61C8D0,#FFE596)' }}>
+        <div className="text-center">
+          <div className="text-xl font-semibold" style={{ color: '#0F5E7B' }}>Loading...</div>
+        </div>
+      </div>
+    )
   }
 
   if (isLoggedIn) {
