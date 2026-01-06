@@ -64,7 +64,6 @@ const apiRequest = async (endpoint, options = {}) => {
     headers,
   });
 
-  // Handle non-JSON responses
   const contentType = response.headers.get('content-type');
   let data;
   
@@ -97,16 +96,13 @@ export const login = async (email, password) => {
       body: JSON.stringify({ email, password }),
     });
 
-    // Store token if provided
     if (data.token) {
       setToken(data.token);
     }
 
-    // Store user data if provided
     if (data.user) {
       setUser(data.user);
     } else if (data.email || data.id) {
-      // If user object is not nested, store the response as user
       setUser({ email: data.email || email, ...data });
     }
 
@@ -125,17 +121,14 @@ export const logout = async () => {
   try {
     const token = getToken();
     
-    // Only call logout API if we have a token
     if (token) {
       await apiRequest('/logout', {
         method: 'POST',
       });
     }
   } catch (error) {
-    // Even if API call fails, clear local auth
     console.error('Logout API error:', error);
   } finally {
-    // Always clear local authentication
     clearAuth();
   }
 };
@@ -150,7 +143,6 @@ export const getMe = async () => {
       method: 'GET',
     });
 
-    // Update stored user data if provided
     if (data.user) {
       setUser(data.user);
     } else if (data.email || data.id) {
@@ -159,7 +151,6 @@ export const getMe = async () => {
 
     return data;
   } catch (error) {
-    // If 401, clear auth (user is not authenticated)
     if (error.status === 401) {
       clearAuth();
     }

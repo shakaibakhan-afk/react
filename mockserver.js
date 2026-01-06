@@ -1,4 +1,3 @@
-// mockserver.js
 import express from 'express';
 import cors from 'cors';
 
@@ -7,7 +6,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Login endpoint
 app.post('/login', (req, res) => {
   const { email, password } = req.body;
   if (email && password) {
@@ -20,12 +18,10 @@ app.post('/login', (req, res) => {
   }
 });
 
-// Logout endpoint
 app.post('/logout', (req, res) => {
   res.json({ message: "Logged out" });
 });
 
-// Get current user
 app.get('/me', (req, res) => {
   res.json({
     user: { id: 1, name: "Test User", email: "staff@example.com" }

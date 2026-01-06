@@ -12,27 +12,21 @@ function App() {
   const [user, setUser] = useState(null)
   const [checkingAuth, setCheckingAuth] = useState(true)
 
-  // Check authentication status on app load
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        // Check if we have a token
         if (isAuthenticated()) {
-          // Try to get user info from API
           try {
             const userData = await getMe()
-            // Update user state with API response
             const currentUser = getCurrentUser()
             setUser(currentUser || { email: userData.email || userData.user?.email })
             setIsLoggedIn(true)
           } catch (err) {
-            // If getMe fails (e.g., 401), clear auth and show login
             console.error('Auth check failed:', err)
             setIsLoggedIn(false)
             setUser(null)
           }
         } else {
-          // No token, ensure we're logged out
           setIsLoggedIn(false)
           setUser(null)
         }
@@ -56,16 +50,13 @@ function App() {
     try {
       const response = await login(email, password)
       
-      // Get user data from response or localStorage
       const currentUser = getCurrentUser()
       setUser(currentUser || { email: response.email || response.user?.email || email })
       setIsLoggedIn(true)
       
-      // Clear form
       setEmail('')
       setPassword('')
     } catch (err) {
-      // Handle different error types
       let errorMsg = 'Failed to login. Please check your credentials.'
       
       if (err.status === 401) {
@@ -94,7 +85,6 @@ function App() {
       await logout()
     } catch (err) {
       console.error('Logout error:', err)
-      // Even if API call fails, clear local state
     } finally {
       setIsLoggedIn(false)
       setUser(null)
@@ -105,7 +95,6 @@ function App() {
     }
   }
 
-  // Show loading state while checking authentication
   if (checkingAuth) {
     return (
       <div className="min-h-screen w-full flex items-center justify-center" style={{ background: 'linear-gradient(180deg ,#61C8D0,#FFE596)' }}>
@@ -122,10 +111,8 @@ function App() {
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center" style={{ background: 'linear-gradient(180deg ,#61C8D0,#FFE596)' }}>
-      {/* Hero Section with Gradient Background */}
       <div className="w-full flex items-center justify-center py-8 px-4">
         <div className="w-full max-w-[400px] mx-auto space-y-6">
-          {/* Logo Section */}
           <div className="text-center mb-6">
             <img 
               src={logo} 
@@ -134,14 +121,11 @@ function App() {
             />
           </div>
 
-          {/* Login Card with White Background */}
           <div className="bg-white rounded-xl shadow-2xl p-10 w-full">
-            {/* Welcome Back Text */}
             <h1 className="text-2xl font-bold mb-4 whitespace-nowrap text-center" style={{ color: '#0F5E7B', fontSize: '1.5rem' }}>
               Welcome back
             </h1>
             
-            {/* Login Form */}
             <form onSubmit={handleSubmit} className="space-y-5 mt-6">
               <div>
                 <label htmlFor="email" className="block text-base font-semibold mb-3 tracking-tight whitespace-nowrap" style={{ color: '#0F5E7B', fontSize: '1rem' }}>
@@ -195,7 +179,6 @@ function App() {
               </button>
             </form>
             
-            {/* Forgot Password Link */}
             <div className="mt-7 text-center">
               <a 
                 href="#" 
@@ -212,11 +195,9 @@ function App() {
   )
 }
 
-// Dashboard Component - Shows after login
 function Dashboard({ user, onLogout }) {
   return (
     <div className="min-h-screen bg-white">
-      {/* Header */}
       <header className="bg-gradient-to-r from-cyan-200 via-teal-200 to-yellow-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex justify-between items-center">
@@ -243,7 +224,6 @@ function Dashboard({ user, onLogout }) {
         </div>
       </header>
 
-      {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold mb-4" style={{ color: '#0F5E7B' }}>
@@ -254,7 +234,6 @@ function Dashboard({ user, onLogout }) {
           </p>
         </div>
 
-        {/* Dashboard Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <div className="bg-white border-2 border-teal-200 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
             <div className="text-teal-600 text-3xl mb-4">📊</div>
@@ -275,7 +254,6 @@ function Dashboard({ user, onLogout }) {
           </div>
         </div>
 
-        {/* Recent Activity */}
         <div className="bg-white border-2 border-gray-200 rounded-lg shadow-md p-6">
           <h3 className="text-2xl font-bold mb-4" style={{ color: '#0F5E7B' }}>Recent Activity</h3>
           <div className="space-y-4">
