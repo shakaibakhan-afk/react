@@ -1,4 +1,5 @@
-const API_BASE_URL = 'http://localhost:5000';
+// Import centralized axios instance
+import apiClient from './apiClient';
 
 /**
  * Get the stored authentication token from localStorage
@@ -46,54 +47,57 @@ const clearAuth = () => {
 };
 
 /**
- * Make an authenticated API request
+ * Make an authenticated API request using axios
+ * This function wraps axios calls and maintains compatibility with existing code
+ * The apiClient instance handles baseURL, headers, and interceptors automatically
  */
 const apiRequest = async (endpoint, options = {}) => {
-  const token = getToken();
-  const headers = {
-    'Content-Type': 'application/json',
-    ...options.headers,
-  };
+  try {
+    // Extract method and data from options
+    const method = options.method || 'GET';
+    let data = options.data;
+    
+    // Handle legacy 'body' option (for backward compatibility)
+    if (options.body && !data) {
+      data = typeof options.body === 'string' ? JSON.parse(options.body) : options.body;
+    }
+    
+    // Build request config - exclude 'body' and 'method' from options spread
+    const { body, ...restOptions } = options;
+    
+    // Use axios instance which handles baseURL, auth headers, and error handling
+    // apiClient.request() is the standard way to make requests with axios instances
+    const response = await apiClient.request({
+      url: endpoint,
+      method: method,
+      data: data,
+      ...restOptions, // Spread other options (headers, params, etc.) but not 'body'
+    });
 
-  if (token) {
-    headers['Authorization'] = `Bearer ${token}`;
-  }
-
-  const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-    ...options,
-    headers,
-  });
-
-  const contentType = response.headers.get('content-type');
-  let data;
-  
-  if (contentType && contentType.includes('application/json')) {
-    data = await response.json();
-  } else {
-    data = await response.text();
-  }
-
-  if (!response.ok) {
-    const error = new Error(data.message || data.error || `HTTP error! status: ${response.status}`);
-    error.status = response.status;
-    error.data = data;
+    // Axios automatically parses JSON responses
+    // Return data property which contains the response body
+    return response.data;
+  } catch (error) {
+    // Error handling is done in apiClient interceptor
+    // Re-throw to maintain existing error handling flow
     throw error;
   }
-
-  return data;
 };
 
 /**
  * Login with email and password
+ * Uses axios via apiClient for API requests
  * @param {string} email - User email
  * @param {string} password - User password
  * @returns {Promise<Object>} - User data and token
  */
 export const login = async (email, password) => {
   try {
-    const data = await apiRequest('/login', {
+    // Use axios - apiClient handles baseURL and JSON serialization automatically
+    // Note: Django URLs require trailing slashes
+    const data = await apiRequest('/login/', {
       method: 'POST',
-      body: JSON.stringify({ email, password }),
+      data: { email, password }, // axios uses 'data' instead of 'body'
     });
 
     if (data.token) {
@@ -115,6 +119,7 @@ export const login = async (email, password) => {
 
 /**
  * Logout the current user
+ * Uses axios via apiClient for API requests
  * @returns {Promise<Object>} - Logout response
  */
 export const logout = async () => {
@@ -122,7 +127,9 @@ export const logout = async () => {
     const token = getToken();
     
     if (token) {
-      await apiRequest('/logout', {
+      // Use axios - apiClient handles authentication headers automatically
+      // Note: Django URLs require trailing slashes
+      await apiRequest('/logout/', {
         method: 'POST',
       });
     }
@@ -135,11 +142,14 @@ export const logout = async () => {
 
 /**
  * Get current user information
+ * Uses axios via apiClient for API requests
  * @returns {Promise<Object>} - Current user data
  */
 export const getMe = async () => {
   try {
-    const data = await apiRequest('/me', {
+    // Use axios - apiClient handles authentication headers automatically
+    // Note: Django URLs require trailing slashes
+    const data = await apiRequest('/me/', {
       method: 'GET',
     });
 
